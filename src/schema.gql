@@ -8,6 +8,14 @@ type Todo {
   done: Boolean!
 }
 
+"""Todo quick aggregation"""
+type AggregationType {
+  total: Int!
+  pending: Int!
+  completed: Int!
+  totalCompleted: Int! @deprecated(reason: "Most use completed instead")
+}
+
 type Query {
   """Message return Hello World"""
   hello: String!
@@ -15,8 +23,12 @@ type Query {
 
   """From zero to argument TO"""
   RandomFromZeroTo(to: Int): Int!
-  AllTodos: [Todo!]!
+  AllTodos(isFinished: Boolean): [Todo!]!
   todo(id: Int!): Todo!
+  countTotalTodos: Int!
+  CompletedTodos: Int!
+  PendingTodos: Int!
+  Aggregation: AggregationType!
 }
 
 type Mutation {
